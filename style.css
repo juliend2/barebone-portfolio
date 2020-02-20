@@ -1,0 +1,40 @@
+/*
+* Theme Name: Barebone
+*/
+
+/* Theme dependencies: */
+@import "css/bootstrap.min.css";
+
+@font-face {
+    font-family: 'Bungee Shade';
+    src: url('fonts/BungeeShade-Regular.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'IBM-Plex-Sans';
+    src: url('fonts/IBMPlexSans-Regular.ttf');
+    font-display: swap;
+}
+
+body {
+    font-family: 'IBM-Plex-Sans', sans-serif;
+}
+
+h1 {
+    font-family: 'Bungee Shade', cursive;
+}
+
+/* Theme styles */
+
+.menu-primary-menu-container ul {
+    display: flex;
+    list-style: none;
+    justify-content: flex-end
+}
+.menu-primary-menu-container ul .page_item {
+    margin-left: 20px;
+}
+
+footer {
+    text-align: center;
+}
