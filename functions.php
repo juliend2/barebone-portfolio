@@ -67,11 +67,13 @@ add_action( 'init', 'bb_portfolio_piece', 0 );
 function bb_modify_query_post_type($query) {
     if ( ! is_admin() && $query->is_main_query() ) {
         $query->set( 'post_type', 'portfolio_entry' );
+        $query->set( 'orderby', 'ID' ); // since we don't have revisions for this post_type
+        $query->set( 'order', 'DESC' );
     }
 }
 add_action( 'pre_get_posts', 'bb_modify_query_post_type' );
 
 function bb_register_primary_menu() {
-  register_nav_menu( 'primary', __( 'Primary Menu', 'theme-slug' ) );
+    register_nav_menu( 'primary', __( 'Primary Menu', 'theme-slug' ) );
 }
 add_action( 'after_setup_theme', 'bb_register_primary_menu' );

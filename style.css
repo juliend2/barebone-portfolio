@@ -14,7 +14,7 @@
 }
 @font-face {
     font-family: 'IBM-Plex-Sans';
-    src: url('fonts/IBMPlexSans-Regular.ttf');
+    src: url('fonts/IBMPlexMono-Regular.ttf');
     font-display: swap;
 }
 
@@ -23,8 +23,18 @@ body {
 }
 
 h1 {
-    font-family: 'Bungee Shade', cursive;
+    font-family: 'Bungee Shade', sans-serif;
 }
+h2 {
+    font-size: 1.5rem;
+}
+a:link, a:visited {
+    color: red;
+}
+a:hover, a:active {
+    color: black;
+}
+
 
 /* Theme styles */
 
@@ -38,5 +48,8 @@ h1 {
 }
 
 footer {
+    padding: 2rem 0;
     text-align: center;
 }
+
+
