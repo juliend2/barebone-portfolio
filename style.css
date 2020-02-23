@@ -25,6 +25,9 @@ body {
 h1 {
     font-family: 'Bungee Shade', sans-serif;
 }
+h1 a:hover {
+	text-decoration: none;
+}
 h2 {
     font-size: 1.5rem;
 }
