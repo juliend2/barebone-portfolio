@@ -55,4 +55,7 @@ footer {
     text-align: center;
 }
 
-
+.content img {
+	width: 100%;
+	height: auto !important;
+}
