@@ -8,6 +8,7 @@ function jdbbt_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'jdbbt_enqueue_styles' );
 
+
 if ( ! function_exists( 'jdbbt_register_taxonomies' ) ) {
 
 // Register Custom Taxonomy
@@ -45,6 +46,39 @@ function jdbbt_register_taxonomies() {
 		'show_tagcloud'              => true,
 	);
 	register_taxonomy( 'jdbbt_medium', array( 'portfolio_entry' ), $args );
+
+	$labels = array(
+		'name'                       => _x( 'Moods', 'Taxonomy General Name', 'jd-barebone-theme' ),
+		'singular_name'              => _x( 'Mood', 'Taxonomy Singular Name', 'jd-barebone-theme' ),
+		'menu_name'                  => __( 'Mood', 'jd-barebone-theme' ),
+		'all_items'                  => __( 'All Moods', 'jd-barebone-theme' ),
+		'parent_item'                => __( 'Parent Mood', 'jd-barebone-theme' ),
+		'parent_item_colon'          => __( 'Parent Mood:', 'jd-barebone-theme' ),
+		'new_item_name'              => __( 'New Mood Name', 'jd-barebone-theme' ),
+		'add_new_item'               => __( 'Add New Mood', 'jd-barebone-theme' ),
+		'edit_item'                  => __( 'Edit Mood', 'jd-barebone-theme' ),
+		'update_item'                => __( 'Update Mood', 'jd-barebone-theme' ),
+		'view_item'                  => __( 'View Mood', 'jd-barebone-theme' ),
+		'separate_items_with_commas' => __( 'Separate moods with commas', 'jd-barebone-theme' ),
+		'add_or_remove_items'        => __( 'Add or remove moods', 'jd-barebone-theme' ),
+		'choose_from_most_used'      => __( 'Choose from the most used', 'jd-barebone-theme' ),
+		'popular_items'              => __( 'Popular Moods', 'jd-barebone-theme' ),
+		'search_items'               => __( 'Search Moods', 'jd-barebone-theme' ),
+		'not_found'                  => __( 'Not Found', 'jd-barebone-theme' ),
+		'no_terms'                   => __( 'No moods', 'jd-barebone-theme' ),
+		'items_list'                 => __( 'Moods list', 'jd-barebone-theme' ),
+		'items_list_navigation'      => __( 'Moods list navigation', 'jd-barebone-theme' ),
+	);
+	$args = array(
+		'labels'                     => $labels,
+		'hierarchical'               => false,
+		'public'                     => true,
+		'show_ui'                    => true,
+		'show_admin_column'          => true,
+		'show_in_nav_menus'          => true,
+		'show_tagcloud'              => true,
+	);
+	register_taxonomy( 'jdbbt_mood', array( 'portfolio_entry' ), $args );
 
 }
 add_action( 'init', 'jdbbt_register_taxonomies', 0 );
@@ -101,7 +135,7 @@ function jdbbt_portfolio_piece() {
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
 		'capability_type'       => 'page',
-		'taxonomies'		=> ['post_tag', 'jdbbt_medium'],
+		'taxonomies'		=> ['post_tag', 'jdbbt_medium', 'jdbbt_mood'],
 	);
     // TODO: Add taxonomies
 	register_post_type( 'portfolio_entry', $args );
@@ -123,3 +157,9 @@ function jdbbt_register_primary_menu() {
     register_nav_menu( 'primary', __( 'Primary Menu', 'theme-slug' ) );
 }
 add_action( 'after_setup_theme', 'jdbbt_register_primary_menu' );
+
+function jdbbt_get_tax_terms_string($post, $taxonomy_slug) {
+	return join(', ', array_map(function($term){
+		return '<a href="'.get_term_link($term).'">'.$term->name.'</a>';
+	}, get_the_terms($post, $taxonomy_slug)));
+}

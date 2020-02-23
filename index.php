@@ -13,7 +13,21 @@ get_header(); ?>
                 <section class="content">
                     <?php the_content(); ?>
                 </section>
-                <nav><a href="<?php echo bloginfo('home') ?>">Back</a></nav>
+		<section>
+		<?php
+		$moods = jdbbt_get_tax_terms_string($post, 'jdbbt_mood');
+		?>
+		<?php if ($moods): ?>
+			Mood: <?php echo $moods ?><br>
+		<?php endif  ?>
+		<?php
+		$media = jdbbt_get_tax_terms_string($post, 'jdbbt_medium');
+		?>
+		<?php if ($media): ?>
+			Medium: <?php echo $media ?><br>
+		<?php endif  ?>
+		</section>
+                <nav class="mt-4"><a href="<?php echo bloginfo('home') ?>">Back</a></nav>
             </div>
         </div>
 
@@ -23,7 +37,14 @@ get_header(); ?>
 	<?php endif; ?>
 
     <?php else: ?>
-        <!-- looping -->
+        <!-- LOOP -->
+	<?php if (is_tax()): ?>
+		<div class="row">
+			<div class="col-sm-12">
+				<h2><?php echo get_the_archive_title() ?></h2>
+			</div>
+		</div>
+	<?php endif ?>
 	<div class="row">
 	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 		<div class="col-sm-6">
@@ -39,6 +60,13 @@ get_header(); ?>
 		<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
 	<?php endif; ?>
 	</div>
+	<?php if (is_tax()): ?>
+	<div class="row">
+		<div class="col-sm-12">
+			<nav class="mt-4"><a href="<?php echo bloginfo('home') ?>">Back</a></nav>
+		</div>
+	</div>
+	<?php endif ?>
 
     <?php endif ?>
 </div><!-- /container -->
