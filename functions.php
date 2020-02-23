@@ -2,14 +2,57 @@
 add_theme_support('post-thumbnails');
 
 
-function bb_enqueue_styles() {
+function jdbbt_enqueue_styles() {
     // Load the main stylesheet
     wp_enqueue_style( 'barebone', get_stylesheet_uri() );
 }
-add_action( 'wp_enqueue_scripts', 'bb_enqueue_styles' );
+add_action( 'wp_enqueue_scripts', 'jdbbt_enqueue_styles' );
+
+if ( ! function_exists( 'jdbbt_register_taxonomies' ) ) {
+
+// Register Custom Taxonomy
+function jdbbt_register_taxonomies() {
+
+	$labels = array(
+		'name'                       => _x( 'Media', 'Taxonomy General Name', 'jd-barebone-theme' ),
+		'singular_name'              => _x( 'Medium', 'Taxonomy Singular Name', 'jd-barebone-theme' ),
+		'menu_name'                  => __( 'Medium', 'jd-barebone-theme' ),
+		'all_items'                  => __( 'All Media', 'jd-barebone-theme' ),
+		'parent_item'                => __( 'Parent Medium', 'jd-barebone-theme' ),
+		'parent_item_colon'          => __( 'Parent medium:', 'jd-barebone-theme' ),
+		'new_item_name'              => __( 'New Medium Name', 'jd-barebone-theme' ),
+		'add_new_item'               => __( 'Add New Medium', 'jd-barebone-theme' ),
+		'edit_item'                  => __( 'Edit Medium', 'jd-barebone-theme' ),
+		'update_item'                => __( 'Update Medium', 'jd-barebone-theme' ),
+		'view_item'                  => __( 'View Medium', 'jd-barebone-theme' ),
+		'separate_items_with_commas' => __( 'Separate media with commas', 'jd-barebone-theme' ),
+		'add_or_remove_items'        => __( 'Add or remove media', 'jd-barebone-theme' ),
+		'choose_from_most_used'      => __( 'Choose from the most used', 'jd-barebone-theme' ),
+		'popular_items'              => __( 'Popular Media', 'jd-barebone-theme' ),
+		'search_items'               => __( 'Search Media', 'jd-barebone-theme' ),
+		'not_found'                  => __( 'Not Found', 'jd-barebone-theme' ),
+		'no_terms'                   => __( 'No media', 'jd-barebone-theme' ),
+		'items_list'                 => __( 'Media list', 'jd-barebone-theme' ),
+		'items_list_navigation'      => __( 'Media list navigation', 'jd-barebone-theme' ),
+	);
+	$args = array(
+		'labels'                     => $labels,
+		'hierarchical'               => false,
+		'public'                     => true,
+		'show_ui'                    => true,
+		'show_admin_column'          => true,
+		'show_in_nav_menus'          => true,
+		'show_tagcloud'              => true,
+	);
+	register_taxonomy( 'jdbbt_medium', array( 'portfolio_entry' ), $args );
+
+}
+add_action( 'init', 'jdbbt_register_taxonomies', 0 );
+
+}
 
 // Register Custom Post Type
-function bb_portfolio_piece() {
+function jdbbt_portfolio_piece() {
 
 	$labels = array(
 		'name'                  => 'Portfolio Entries',
@@ -58,22 +101,25 @@ function bb_portfolio_piece() {
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
 		'capability_type'       => 'page',
+		'taxonomies'		=> ['post_tag', 'jdbbt_medium'],
 	);
     // TODO: Add taxonomies
 	register_post_type( 'portfolio_entry', $args );
 }
-add_action( 'init', 'bb_portfolio_piece', 0 );
+add_action( 'init', 'jdbbt_portfolio_piece', 0 );
 
-function bb_modify_query_post_type($query) {
+
+
+function jdbbt_modify_query_post_type($query) {
     if ( ! is_admin() && $query->is_main_query() ) {
         $query->set( 'post_type', 'portfolio_entry' );
         $query->set( 'orderby', 'ID' ); // since we don't have revisions for this post_type
         $query->set( 'order', 'DESC' );
     }
 }
-add_action( 'pre_get_posts', 'bb_modify_query_post_type' );
+add_action( 'pre_get_posts', 'jdbbt_modify_query_post_type' );
 
-function bb_register_primary_menu() {
+function jdbbt_register_primary_menu() {
     register_nav_menu( 'primary', __( 'Primary Menu', 'theme-slug' ) );
 }
-add_action( 'after_setup_theme', 'bb_register_primary_menu' );
+add_action( 'after_setup_theme', 'jdbbt_register_primary_menu' );
