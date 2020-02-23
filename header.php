@@ -21,7 +21,7 @@
 
         <header class="container">
             <div class="row">
-                <h1 class="col-sm-8">
+                <h1 class="col-sm-8 mt-4">
 		    <a href="<?php bloginfo('url') ?>"><?php echo bloginfo('title') ?></a>
                 </h1>
                 <nav class="col-sm-4">

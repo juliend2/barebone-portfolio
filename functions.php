@@ -1,4 +1,5 @@
 <?php
+
 add_theme_support('post-thumbnails');
 
 
@@ -135,9 +136,8 @@ function jdbbt_portfolio_piece() {
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
 		'capability_type'       => 'page',
-		'taxonomies'		=> ['post_tag', 'jdbbt_medium', 'jdbbt_mood'],
+		'taxonomies'		=> ['jdbbt_medium', 'jdbbt_mood'],
 	);
-    // TODO: Add taxonomies
 	register_post_type( 'portfolio_entry', $args );
 }
 add_action( 'init', 'jdbbt_portfolio_piece', 0 );
