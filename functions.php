@@ -45,6 +45,11 @@ function jdbbt_register_taxonomies() {
 		'show_admin_column'          => true,
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
+		'rewrite'                    => [
+							'slug' => 'medium',
+							'with_front' => true,
+							'hierarchical' => false,
+						],
 	);
 	register_taxonomy( 'jdbbt_medium', array( 'portfolio_entry' ), $args );
 
@@ -78,6 +83,11 @@ function jdbbt_register_taxonomies() {
 		'show_admin_column'          => true,
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
+		'rewrite'                    => [
+							'slug' => 'mood',
+							'with_front' => true,
+							'hierarchical' => false,
+						],
 	);
 	register_taxonomy( 'jdbbt_mood', array( 'portfolio_entry' ), $args );
 
