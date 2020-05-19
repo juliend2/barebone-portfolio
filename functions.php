@@ -1,5 +1,9 @@
 <?php
 
+// Flush the rules:
+// $wp_rewrite->flush_rules();
+
+
 add_theme_support('post-thumbnails');
 
 
@@ -159,6 +163,7 @@ function jdbbt_modify_query_post_type($query) {
         $query->set( 'post_type', 'portfolio_entry' );
         $query->set( 'orderby', 'ID' ); // since we don't have revisions for this post_type
         $query->set( 'order', 'DESC' );
+	$query->set( 'posts_per_page', '-1');
     }
 }
 add_action( 'pre_get_posts', 'jdbbt_modify_query_post_type' );

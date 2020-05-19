@@ -1,4 +1,5 @@
-<?php define( 'WP_USE_THEMES', false );
+<?php
+define( 'WP_USE_THEMES', false );
 get_header(); ?>
 
 <div class="container <?php echo is_single() ? 'single' : 'plural' ?>">
